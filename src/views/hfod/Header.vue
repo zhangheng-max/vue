@@ -4,7 +4,7 @@
     <div class="header-icon-search">
       <!-- 回退图标 -->
       <span v-if="GoBack=='true'">
-        <van-icon name="arrow-left" @click="$router.go(-1)" />
+        <van-icon name="arrow-left" @click="Goto()" />
       </span>
 
       <!-- 所有城市页面的ele.me字 -->
@@ -53,7 +53,12 @@
 
 <script>
 export default {
-  props: ["GoBack", "Address", "Head"]
+  props: ["GoBack", "Address", "Head"],
+  methods: {
+    Goto() {
+      this.$router.go(-1);
+    }
+  }
 };
 </script>
 

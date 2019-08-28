@@ -108,7 +108,7 @@ export default {
       // console.log(getpois);
 
       this.getpois = getpois;
-      localStorage.setItem("geohash", v.geohash);
+      this.$store.commit("setGeohash", v.geohash);
       this.$router.push({ path: `/msite`, query: { geohash: v.geohash } });
       // console.log(check);
     },

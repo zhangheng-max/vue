@@ -2,32 +2,25 @@
   <!--尾部 -->
   <footer class="footer">
     <van-tabbar route>
-      <van-tabbar-item icon="home-o" replace :to="{ path: `/msite`, query: { geohash:geohash } }">外卖</van-tabbar-item>
-      <van-tabbar-item icon="search" replace :to="`/search/${geohash}`">搜索</van-tabbar-item>
-      <van-tabbar-item icon="friends-o" replace to="/order">订单</van-tabbar-item>
-      <van-tabbar-item icon="setting-o" replace to="/profile">我的</van-tabbar-item>
+      <van-tabbar-item icon="home-o" :to="{ path: `/msite`, query: { geohash:this.geohash } }">外卖</van-tabbar-item>
+      <van-tabbar-item icon="search" :to="`/search/${this.geohash}`">搜索</van-tabbar-item>
+      <van-tabbar-item icon="friends-o" to="/order">订单</van-tabbar-item>
+      <van-tabbar-item icon="setting-o" to="/profile">我的</van-tabbar-item>
     </van-tabbar>
     <router-view />
   </footer>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
-    return {
-      geohash: ""
-    };
+    return {};
   },
-  mounted() {
-    console.log(this.$store.state.user_id);
-
-    // console.log(this.$store.state.user_id);
-    let geohash = localStorage.getItem("geohash");
-    // console.log(geohash);
-    if (geohash) {
-      this.geohash = geohash;
-    }
-  }
+  computed: {
+    ...mapState(["geohash"])
+  },
+  mounted() {}
 };
 </script>
 

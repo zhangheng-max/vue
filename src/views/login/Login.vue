@@ -102,9 +102,8 @@ export default {
               message: res.data.message
             });
           } else {
-            localStorage.setItem("user_id", JSON.stringify(res.data.id));
             this.$store.commit("setId", res.data.id);
-            this.$router.push({ path: "/home" });
+            this.$router.go(-1);
           }
         });
     }

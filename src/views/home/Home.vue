@@ -2,8 +2,7 @@
   <!-- 城市页面 -->
   <div class="Select">
     <!-- 表头 -->
-    <Header GoBack="ele.me" :Head="{'login':login}"></Header>
-
+    <Header GoBack="ele.me" :Head="{'login':this.user_cheack}"></Header>
     <div class="present">
       <div class="present-place">
         <p>当前定位城市:</p>
@@ -37,6 +36,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import Header from "../hfod/Header.vue";
 export default {
   data() {
@@ -49,6 +49,10 @@ export default {
   },
   components: {
     Header
+  },
+  computed: {
+    //查看是否已经登录
+    ...mapState(["user_cheack"])
   },
   methods: {
     //路由跳转到搜索页面
@@ -76,13 +80,6 @@ export default {
       // console.log(res);
       this.hot = res.data;
     });
-
-    //获取登录id
-    if (this.$store.state.user_id) {
-      this.login = true;
-    } else {
-      this.login = false;
-    }
   }
 };
 </script>

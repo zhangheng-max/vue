@@ -2,7 +2,8 @@
   <!-- 附件商家页面 -->
   <div class="TtpodMain">
     <!-- 表头 -->
-    <Header :Head="{'login':login}">
+    <Header :Head="{'login':this.user_cheack}">
+      <!-- <router-link to="/search/"></router-link> -->
       <span slot="search">
         <van-icon name="search" class="search" />
       </span>
@@ -80,6 +81,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import Header from "../hfod/Header.vue";
 import Footer from "../hfod/Footer.vue";
 export default {
@@ -94,6 +96,10 @@ export default {
   components: {
     Header,
     Footer
+  },
+  computed: {
+    //判断user_id纯不存在
+    ...mapState(["user_cheack"])
   },
   methods: {
     //路由跳转到所有城市页面
@@ -139,13 +145,6 @@ export default {
       this.pois = res.data;
       // console.log(this.pois);
     });
-
-    //判断user_id纯不存在
-    if (this.$store.state.user_id) {
-      this.login = true;
-    } else {
-      this.login = false;
-    }
   }
 };
 </script>
