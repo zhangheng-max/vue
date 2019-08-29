@@ -4,7 +4,7 @@
     <div class="header-icon-search">
       <!-- 回退图标 -->
       <span v-if="GoBack=='true'">
-        <van-icon name="arrow-left" @click="Goto()" />
+        <van-icon name="arrow-left" @click="$router.go(-1)" />
       </span>
 
       <!-- 所有城市页面的ele.me字 -->
@@ -24,14 +24,16 @@
       <!-- 搜索页面文字 -->
       <span v-if="Address=='seek'">搜索</span>
 
-      <!-- 我的页面 -->
-      <slot name="profile"></slot>
-
       <!-- 订单页面 -->
       <slot name="order"></slot>
 
       <!-- 登录页面 -->
       <slot name="login"></slot>
+
+      <!-- 我的页面 -->
+      <slot name="profile"></slot>
+      <!-- 用户信息 -->
+      <slot name="profile_info"></slot>
     </div>
 
     <div class="header-icon-user">
@@ -53,12 +55,7 @@
 
 <script>
 export default {
-  props: ["GoBack", "Address", "Head"],
-  methods: {
-    Goto() {
-      this.$router.go(-1);
-    }
-  }
+  props: ["GoBack", "Address", "Head"]
 };
 </script>
 

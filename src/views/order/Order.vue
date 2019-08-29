@@ -1,14 +1,14 @@
 <template>
-  <!-- 订单页面 -->
+  <!-- 
+    
+  -->
   <div class="Order">
     <!-- 头部 -->
     <Header GoBack="true">
       <span slot="order">订单列表</span>
     </Header>
 
-    <div class="main">
-      
-    </div>
+    <div class="main"></div>
 
     <!-- 尾部 -->
     <Footer></Footer>

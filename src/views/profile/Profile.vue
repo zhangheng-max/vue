@@ -90,12 +90,12 @@
               </g>
             </svg>
           </span>
-          <div class="myorder-div">
+          <router-link to="/order" tag="div" class="myorder-div">
             <span>我的订单</span>
             <span class="myorder-div-icon">
               <van-icon name="arrow" color="rgb(187, 187, 187)" />
             </span>
-          </div>
+          </router-link>
         </div>
         <div class="profile-2reTe">
           <span class="profile-rete-icon">
@@ -191,7 +191,8 @@
       </section>
     </div>
     <Footer></Footer>
-    {{this.$store.state.id}}
+    <!-- {{this.$store.state.id}} -->
+    <router-view></router-view>
   </div>
 </template>
 
@@ -226,7 +227,7 @@ export default {
     //路由跳转
     GoLogin() {
       if (this.info != "") {
-        console.log(111);
+        this.$router.push({ path: "/profile/info" });
       } else {
         this.$router.push({ path: "/login" });
       }

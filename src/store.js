@@ -15,12 +15,7 @@ export default new Vuex.Store({
     },
     mutations: {
         setId(state, id) {
-            if (id) {
-                state.user_id = id
-                state.user_cheack = true
-            } else {
-                state.user_cheack = false
-            }
+            state.user_id = id
         },
         setGeohash(state, geohash) {
             if (geohash) {
@@ -29,6 +24,16 @@ export default new Vuex.Store({
         }
     },
     actions: {},
-    getters: {},
+    getters: {
+        user_cheack: (state) => {
+            let check = false
+            if (state.user_id != 0 && state.user_id != '') {
+                check = true
+            } else {
+                check = false
+            }
+            return check
+        }
+    },
     plugins: [vuexLocal.plugin],
 })

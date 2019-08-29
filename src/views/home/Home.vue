@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 import Header from "../hfod/Header.vue";
 export default {
   data() {
@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     //查看是否已经登录
-    ...mapState(["user_cheack"])
+    ...mapGetters(["user_cheack"])
   },
   methods: {
     //路由跳转到搜索页面

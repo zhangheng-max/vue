@@ -7,7 +7,6 @@
       <van-tabbar-item icon="friends-o" to="/order">订单</van-tabbar-item>
       <van-tabbar-item icon="setting-o" to="/profile">我的</van-tabbar-item>
     </van-tabbar>
-    <router-view />
   </footer>
 </template>
 
@@ -31,21 +30,12 @@ export default {
   bottom: 0;
   width: 100%;
   background: #fff;
-  ul {
-    border-top: 0.01rem #ccc solid;
-    display: flex;
-    li {
-      width: 25%;
-      text-align: center;
-      padding: 0.05rem 0;
-      i {
-        display: block;
-        font-size: 0.25rem;
-      }
 
-      span {
-        color: #999;
-        font-size: 0.16rem;
+  .van-tabbar {
+    border-top: 1px #ccc solid;
+    .van-tabbar-item__icon {
+      i.van-icon.van-icon-home-o {
+        font-size: 0.25rem;
       }
     }
   }
