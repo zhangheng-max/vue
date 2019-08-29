@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VuePersist from 'vuex-persist'
-
+import user from './router/user'
 Vue.use(Vuex)
 const vuexLocal = new VuePersist({
     storage: window.localStorage
@@ -9,31 +9,17 @@ const vuexLocal = new VuePersist({
 
 export default new Vuex.Store({
     state: {
-        user_id: 0,
-        user_cheack: false,
         geohash: ""
     },
     mutations: {
-        setId(state, id) {
-            state.user_id = id
-        },
         setGeohash(state, geohash) {
             if (geohash) {
                 state.geohash = geohash
             }
         }
     },
-    actions: {},
-    getters: {
-        user_cheack: (state) => {
-            let check = false
-            if (state.user_id != 0 && state.user_id != '') {
-                check = true
-            } else {
-                check = false
-            }
-            return check
-        }
+    modules: {
+        user: user
     },
     plugins: [vuexLocal.plugin],
 })

@@ -42,11 +42,11 @@
 
       <!-- 是登录注册还是已经登录过 -->
       <span v-if="Head">
-        <router-link to="/login" v-if="Head.login==false">
-          <span style="color:#fff">登录|注册</span>
-        </router-link>
-        <router-link to="/Profile" v-if="Head.login==true">
+        <router-link to="/profile" v-if="usercheack">
           <van-icon name="contact" class="el-icon-user" />
+        </router-link>
+        <router-link to="/login" v-else>
+          <span style="color:#fff">登录|注册</span>
         </router-link>
       </span>
     </div>
@@ -54,8 +54,18 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
-  props: ["GoBack", "Address", "Head"]
+  props: ["GoBack", "Address", "Head"],
+  data() {
+    return {
+      usercheack: ""
+    };
+  },
+  computed: {},
+  mounted() {
+    this.usercheack = this.$store.state.user.user_check;
+  }
 };
 </script>
 

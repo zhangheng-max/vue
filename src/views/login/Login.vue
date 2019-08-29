@@ -102,7 +102,14 @@ export default {
               message: res.data.message
             });
           } else {
-            this.$store.commit("setId", res.data.id);
+            let obj = {
+              user_id: res.data.id,
+              user_check: true,
+              user_name: res.data.username
+            };
+            console.log(obj);
+
+            this.$store.commit("userSetId", obj);
             this.$router.go(-1);
           }
         });

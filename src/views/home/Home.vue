@@ -2,7 +2,7 @@
   <!-- 城市页面 -->
   <div class="Select">
     <!-- 表头 -->
-    <Header GoBack="ele.me" :Head="{'login':this.user_cheack}"></Header>
+    <Header GoBack="ele.me" :Head="true"></Header>
     <div class="present">
       <div class="present-place">
         <p>当前定位城市:</p>
@@ -32,27 +32,27 @@
         </ul>
       </ol>
     </div>
+    <Gif :shouGit="shouGit"></Gif>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import Header from "../hfod/Header.vue";
+import Gif from "../Gif/Gif.vue";
 export default {
   data() {
     return {
       info: [], //所有城市数据内容
       guess: [], // 当前城市数据内容
       hot: [], // 热门城市数据内容
-      login: false //是否已经登录
+      login: false, //是否已经登录
+      shouGit: true //数据没有的时候显示的动画
     };
   },
   components: {
-    Header
-  },
-  computed: {
-    //查看是否已经登录
-    ...mapGetters(["user_cheack"])
+    Header,
+    Gif
   },
   methods: {
     //路由跳转到搜索页面
@@ -63,11 +63,7 @@ export default {
     }
   },
   mounted() {
-    //所有城市数据内容
-    this.$http.get(`http://elm.cangdu.org/v1/cities?type=group`).then(res => {
-      // console.log(Object.keys(res.data).sort());
-      this.info = res.data;
-    });
+    this.shouGit = true;
 
     // 当前城市数据内容
     this.$http.get(`http://elm.cangdu.org/v1/cities?type=guess`).then(res => {
@@ -79,6 +75,12 @@ export default {
     this.$http.get(`http://elm.cangdu.org/v1/cities?type=hot`).then(res => {
       // console.log(res);
       this.hot = res.data;
+    });
+    //所有城市数据内容
+    this.$http.get(`http://elm.cangdu.org/v1/cities?type=group`).then(res => {
+      // console.log(Object.keys(res.data).sort());
+      this.info = res.data;
+      this.shouGit = false;
     });
   }
 };

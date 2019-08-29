@@ -215,9 +215,10 @@ export default {
   },
   mounted() {
     // let id = localStorage.getItem("user_id");
-    if (this.user_id) {
+    let user_id = this.$store.state.user.user_id;
+    if (user_id) {
       this.$http
-        .get(`http://elm.cangdu.org/v1/user?user_id=${this.user_id}`)
+        .get(`http://elm.cangdu.org/v1/user?user_id=${user_id}`)
         .then(res => {
           this.info = res.data;
         });

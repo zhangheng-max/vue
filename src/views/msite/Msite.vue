@@ -2,7 +2,7 @@
   <!-- 附件商家页面 -->
   <div class="TtpodMain">
     <!-- 表头 -->
-    <Header :Head="{'login':this.user_cheack}">
+    <Header :Head="true">
       <!-- <router-link to="/search/"></router-link> -->
       <span slot="search">
         <van-icon name="search" class="search" />
@@ -82,12 +82,11 @@
     <Footer></Footer>
 
     <!-- 接口没有请求数据之前显示的动画 -->
-    <Gif :shouGit="showGit"></Gif>
+    <Gif :shouGit="shouGit"></Gif>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import Header from "../hfod/Header.vue";
 import Footer from "../hfod/Footer.vue";
 import Gif from "../Gif/Gif";
@@ -101,7 +100,7 @@ export default {
       latitude: "", //经纬度
       longitude: "", //经纬度
       login: false, //是否显示返回图标
-      showGit: true, //数据没有的时候显示的动画
+      shouGit: true, //数据没有的时候显示的动画
       loading: false, //让加载结束
       finished: false, //最大可以加载到什么然后结束
       num: 0, //加载的数量
@@ -114,16 +113,13 @@ export default {
     Gif,
     Msitesvg
   },
-  computed: {
-    //判断user_id纯不存在
-    ...mapGetters(["user_cheack"])
-  },
+
   mounted() {
     let geohash = this.$route.query.geohash; //路由传参的地址
     let restaurants = geohash.split(","); //截取内容
     this.latitude = restaurants[0]; //当前地址latitude地址
     this.longitude = restaurants[1]; //当前地址longitude地址
-    this.showGit = true;
+    this.shouGit = true;
     //轮播数据内容
     this.$http
       .get(
@@ -149,7 +145,7 @@ export default {
       .then(res => {
         // console.log(res.data);
         this.arr = res.data;
-        this.showGit = false;
+        this.shouGit = false;
         // console.log(this.arr);
       });
     //获取geohash的地址内容
