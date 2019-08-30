@@ -181,12 +181,12 @@
               </use>
             </svg>
           </span>
-          <div class="myorder-div">
+          <router-link to="/download" tag="div" class="myorder-div">
             <span>下载饿了么APP</span>
             <span class="myorder-div-icon">
               <van-icon name="arrow" color="rgb(187, 187, 187)" />
             </span>
-          </div>
+          </router-link>
         </div>
       </section>
     </div>

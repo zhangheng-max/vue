@@ -34,6 +34,14 @@
       <slot name="profile"></slot>
       <!-- 用户信息 -->
       <slot name="profile_info"></slot>
+      <!-- 下载App -->
+      <slot name="download"></slot>
+      <!-- 修改用户名 -->
+      <slot name="infousername"></slot>
+      <!-- 编辑地址 -->
+      <slot name="addContent"></slot>
+      <!-- 新增地址 -->
+      <slot name="addressadd"></slot>
     </div>
 
     <div class="header-icon-user">
@@ -49,6 +57,9 @@
           <span style="color:#fff">登录|注册</span>
         </router-link>
       </span>
+
+      <!-- 编辑地址的编辑/完成 -->
+      <slot name="addRight"></slot>
     </div>
   </header>
 </template>

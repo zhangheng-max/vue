@@ -12,7 +12,9 @@ export default ({
             arr.user_name = obj.user_name
             state = arr
                 // console.log(obj.user_check);
-
+        },
+        Danger(state) {
+            state.user_id = 0
         }
     },
     actions: {},

@@ -66,7 +66,9 @@ export default {
     submit() {
       // this.$refs.inputVal.focus();
       if (this.cityval == "") {
-        this.open();
+        this.$dialog.alert({
+          message: "内容不能为空"
+        });
       } else {
         //点击搜索地址数据内容
         let id = this.$route.params.id;
@@ -83,13 +85,6 @@ export default {
             // console.log(this.search);
           });
       }
-    },
-
-    // 当点击搜索内容为空时弹出框
-    open() {
-      this.$alert("内容不能为空", {
-        confirmButtonText: "确定"
-      });
     },
 
     //跳转到点击的附件商家

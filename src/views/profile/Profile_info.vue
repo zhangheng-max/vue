@@ -5,31 +5,36 @@
     </Header>
     <section class="profile-info">
       <section class="headportrait">
+        <input type="file" class="profileinfopanel-upload" @input="File()" />
         <h2>头像</h2>
         <div class="headportrait-div">
-          <img src="//elm.cangdu.org/img/16cd5a26c8452066.jpeg" class="headportrait-div-top" />
+          <img :src="`https://elm.cangdu.org/img/${info.avatar}`" class="headportrait-div-top" />
           <span class="headportrait-div-bottom">
             <van-icon name="arrow" class="headportrait-div-bottom-inco" />
           </span>
         </div>
       </section>
-      <section class="headportrait headportraitwo">
+      <router-link to="/profile/info/setusername" tag="section" class="headportrait headportraitwo">
         <h2>用户名</h2>
         <div class="headportrait-div">
-          <p>17558418773</p>
+          <p>{{info.username}}</p>
           <span class="headportrait-div-bottom">
             <van-icon name="arrow" class="headportrait-div-bottom-inco" />
           </span>
         </div>
-      </section>
-      <section class="headportrait headportraitwo headportraithree">
+      </router-link>
+      <router-link
+        to="/profile/info/address"
+        tag="section"
+        class="headportrait headportraitwo headportraithree"
+      >
         <h2>收货地址</h2>
         <div class="headportrait-div">
           <span class="headportrait-div-bottom">
             <van-icon name="arrow" class="headportrait-div-bottom-inco" />
           </span>
         </div>
-      </section>
+      </router-link>
       <section class="bind-phone">账号绑定</section>
       <section class="headportrait headportraitwo">
         <h2>
@@ -55,28 +60,75 @@
           </span>
         </div>
       </section>
+      <section class="danger">
+        <van-button type="danger" class="button" @click="Danger()">退出登录</van-button>
+      </section>
     </section>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+import { Dialog } from "vant";
+
+// Dialog({ message: "提示" });
 import Header from "../hfod/Header";
 export default {
+  data() {
+    return {
+      value: "",
+      info: [] //页面数据
+    };
+  },
   components: {
     Header
+  },
+  methods: {
+    Danger() {
+      Dialog.confirm({
+        title: "退出登录",
+        message: "您确定要退出登录吗?"
+      })
+        .then(() => {
+          // on confirm
+          this.$store.commit("Danger");
+          this.$router.push({ path: "/profile" });
+        })
+        .catch(() => {
+          // on cancel
+        });
+      this.$router;
+    },
+    File() {
+      console.log(this.value);
+    }
+  },
+  mounted() {
+    let user_id = this.$store.state.user.user_id;
+    if (user_id) {
+      this.$http
+        .get(`http://elm.cangdu.org/v1/user?user_id=${user_id}`)
+        .then(res => {
+          if (res.status == 200) {
+            this.info = res.data;
+          }
+        });
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .Profile_info {
-  position: fixed;
+  position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   background: #f5f5f5;
-  z-index: 100;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
 
   .profile-info {
     margin-top: 0.65rem;
@@ -88,6 +140,16 @@ export default {
       justify-content: space-between;
       padding: 0.11rem 0.12rem;
       padding-right: 0.1rem;
+      position: relative;
+      .profileinfopanel-upload {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        left: 0;
+        bottom: 0;
+        opacity: 0;
+      }
       p {
         display: block;
         margin-top: 0.15rem;
@@ -124,6 +186,15 @@ export default {
     }
     .headportraithree {
       border-bottom: 1px solid #ddd;
+    }
+    .danger {
+      margin-top: 0.3rem;
+      padding: 0 0.1rem;
+      .button {
+        width: 100%;
+        border-radius: 0.05rem;
+        font-size: 0.18rem;
+      }
     }
   }
   .bind-phone {

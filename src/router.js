@@ -14,7 +14,13 @@ const Msite = r => require.ensure([], () => r(require('./views/msite/Msite.vue')
 const Search = r => require.ensure([], () => r(require('./views/search/Search.vue')), 'Search')
 const Order = r => require.ensure([], () => r(require('./views/order/Order.vue')), 'Order')
 const Profile = r => require.ensure([], () => r(require('./views/profile/Profile.vue')), 'Profile')
+
 const Profile_info = r => require.ensure([], () => r(require('./views/profile/Profile_info.vue')), 'Profile_info')
+const Pronfile_info_setusername = r => require.ensure([], () => r(require('./views/profile/Pronfile_info_setusername.vue')), 'Pronfile_info_setusername')
+const Pronfile_info_address = r => require.ensure([], () => r(require('./views/profile/Pronfile_info_address.vue')), 'Pronfile_info_address')
+const Pronfile_info_address_add = r => require.ensure([], () => r(require('./views/profile/Pronfile_info_address_add.vue')), 'Pronfile_info_address_add')
+
+const Download = r => require.ensure([], () => r(require('./views/profile/Download.vue')), 'Download')
 const Shop = r => require.ensure([], () => r(require('./views/shop/Shop.vue')), 'Shop')
 const Login = r => require.ensure([], () => r(require('./views/login/Login.vue')), 'Login')
 export default new Router({
@@ -73,7 +79,28 @@ export default new Router({
                     path: '/profile/info',
                     name: 'Profile_info',
                     component: Profile_info,
+                    children: [{
+                        path: '/profile/info/setusername',
+                        name: 'Pronfile_info_setusername',
+                        component: Pronfile_info_setusername,
+                    }, {
+                        path: '/profile/info/address',
+                        name: 'Pronfile_info_address',
+                        component: Pronfile_info_address,
+                        children: [{
+                            path: '/profile/info/address/add',
+                            name: 'Pronfile_info_address_add',
+                            component: Pronfile_info_address_add,
+                        }]
+                    }]
                 }]
+            },
+            //下载App
+            {
+
+                path: '/download',
+                name: 'Download',
+                component: Download
             },
             //商品分类页面
             {
