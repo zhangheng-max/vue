@@ -42,6 +42,8 @@
       <slot name="addContent"></slot>
       <!-- 新增地址 -->
       <slot name="addressadd"></slot>
+      <!-- 搜索地址 -->
+      <slot name="addDetail"></slot>
     </div>
 
     <div class="header-icon-user">

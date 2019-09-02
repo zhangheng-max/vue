@@ -105,9 +105,9 @@ export default {
             let obj = {
               user_id: res.data.id,
               user_check: true,
-              user_name: res.data.username
+              user_name: res.data.username,
+              avatar: res.data.avatar
             };
-            console.log(obj);
 
             this.$store.commit("userSetId", obj);
             this.$router.go(-1);

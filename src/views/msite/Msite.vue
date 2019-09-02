@@ -35,7 +35,7 @@
         <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
           <div class="main-content">
             <ul>
-              <li v-for="(v,i) in arr" :key="i">
+              <li v-for="(v,i) in arr" :key="i" @click="GoShop(v.id)">
                 <img :src="`//elm.cangdu.org/img/${v.image_path}`" alt />
                 <div class="item">
                   <div class="item-left">
@@ -138,16 +138,8 @@ export default {
       });
 
     //附近商家数据内容
-    this.$http
-      .get(
-        `http://elm.cangdu.org/shopping/restaurants?latitude=${this.latitude}&longitude=${this.longitude}&offset=0&limit=30&extras[]=activities&keyword=&restaurant_category_id=&restaurant_category_ids[]=&order_by=&delivery_mode[]=`
-      )
-      .then(res => {
-        // console.log(res.data);
-        this.arr = res.data;
-        this.shouGit = false;
-        // console.log(this.arr);
-      });
+    this.Godata();
+
     //获取geohash的地址内容
     this.$http.get(`http://elm.cangdu.org/v2/pois/${geohash}`).then(res => {
       this.pois = res.data;
@@ -161,8 +153,8 @@ export default {
     },
     onLoad() {
       // 异步更新数据
-      // 异步更新数据
       setTimeout(() => {
+        this.num += 20;
         this.Godata();
         // 加载状态结束
         this.loading = false;
@@ -171,21 +163,24 @@ export default {
         if (this.arr.length >= 60) {
           this.finished = true;
         }
-      }, 500);
+      }, 1000);
     },
-
     //获取数据
     Godata() {
-      this.num = this.num + 30;
       this.$http
         .get(
-          `http://elm.cangdu.org/shopping/restaurants?latitude=${this.latitude}&longitude=${this.longitude}&offset=${this.num}&limit=${this.num}&extras[]=activities&keyword=&restaurant_category_id=&restaurant_category_ids[]=&order_by=&delivery_mode[]=`
+          `http://elm.cangdu.org/shopping/restaurants?latitude=${this.latitude}&longitude=${this.longitude}&offset=${this.num}&limit=20&extras[]=activities&keyword=&restaurant_category_id=&restaurant_category_ids[]=&order_by=&delivery_mode[]=`
         )
         .then(res => {
-          if (this.arr.length < 60) {
-            this.arr = this.arr.concat(res.data);
-          }
+          this.arr = this.arr.concat(res.data);
+          this.loading = false;
+          this.shouGit = false;
         });
+    },
+    // 跳转全部商品页面
+    GoShop(id) {
+      let geohash = this.$route.query.geohash; //路由地址的经纬度
+      this.$router.push({ path: "/shop", query: { geohash: geohash, id: id } });
     }
   }
 };

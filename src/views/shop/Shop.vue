@@ -17,9 +17,7 @@
     <main class="main">
       <div class="main-left">
         <van-sidebar v-model="activeKey" @change="active()" class="sidebar-item">
-          <van-sidebar-item title="标签名称" />
-          <van-sidebar-item title="标签名称" />
-          <van-sidebar-item title="标签名称" />
+          <van-sidebar-item v-for="(v,i) in info" :key="i" :title="v.name" />
         </van-sidebar>
       </div>
       <div class="main-right">
@@ -27,12 +25,12 @@
           <li>
             <header class="menu_detail_header">
               <section class="menu_detail_header_left">
-                <span class="menu_item_title">热销榜</span>
-                <span class="menu_item_description">是的分身乏术放</span>
+                <span class="menu_item_title">{{info[0].name}}</span>
+                <span class="menu_item_description">{{info[0].description}}</span>
               </section>
               <span class="menu_detail_header_right"></span>
             </header>
-            <section class="menu_detail_list">
+            <section class="menu_detail_list" v-for="(k,y) in info[activeKey].foods" :key="y">
               <section class="menu_detail_link">
                 <!-- 图片 -->
                 <section class="menu_food_img">
@@ -40,7 +38,7 @@
                 </section>
                 <!-- 内容 -->
                 <section class="menu_food_description">
-                  <h3 class="food_description_head">我问问</h3>
+                  <h3 class="food_description_head">{{k.name}}</h3>
                   <p class="food_description_content">发111</p>
                   <p class="food_description_sale_rating">
                     <span>月售404份</span>
@@ -136,24 +134,47 @@
     </section>
     <!-- 全屏阴影 -->
     <div class="screen_cover" style="display: none;"></div>
+    <Gif :shouGit="shouGit"></Gif>
   </div>
 </template>
 
 <script>
 import Header from "../hfod/Header";
+import Gif from "../Gif/Gif";
 export default {
   data() {
     return {
-      activeKey: 0
+      info: [],
+      activeKey: 0,
+      shouGit: true
     };
   },
   components: {
-    Header
+    Header,
+    Gif
   },
   methods: {
     active() {
       //   console.log(this.activeKey);
+    },
+    // 获取全部商品信息
+    GoShop() {
+      this.shouGit = true;
+      this.$http
+        .get(
+          `http://elm.cangdu.org/shopping/v2/menu?restaurant_id=${this.$route.query.id}`
+        )
+        .then(res => {
+          this.shouGit = false;
+
+          if (res.status == 200) {
+            this.info = res.data;
+          }
+        });
     }
+  },
+  mounted() {
+    this.GoShop();
   }
 };
 </script>
@@ -332,7 +353,7 @@ export default {
     height: 0.56rem;
     background: #333;
     display: flex;
-    z-index: 99;
+    z-index: 95;
     justify-content: space-between;
     .buy_cart_container {
       display: flex;

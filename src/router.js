@@ -19,6 +19,7 @@ const Profile_info = r => require.ensure([], () => r(require('./views/profile/Pr
 const Pronfile_info_setusername = r => require.ensure([], () => r(require('./views/profile/Pronfile_info_setusername.vue')), 'Pronfile_info_setusername')
 const Pronfile_info_address = r => require.ensure([], () => r(require('./views/profile/Pronfile_info_address.vue')), 'Pronfile_info_address')
 const Pronfile_info_address_add = r => require.ensure([], () => r(require('./views/profile/Pronfile_info_address_add.vue')), 'Pronfile_info_address_add')
+const Pronfile_info_address_addDetail = r => require.ensure([], () => r(require('./views/profile/Pronfile_info_address_addDetail.vue')), 'Pronfile_info_address_addDetail')
 
 const Download = r => require.ensure([], () => r(require('./views/profile/Download.vue')), 'Download')
 const Shop = r => require.ensure([], () => r(require('./views/shop/Shop.vue')), 'Shop')
@@ -91,6 +92,11 @@ export default new Router({
                             path: '/profile/info/address/add',
                             name: 'Pronfile_info_address_add',
                             component: Pronfile_info_address_add,
+                            children: [{
+                                path: '/profile/info/address/add/addDetail',
+                                name: 'Pronfile_info_address_addDetail',
+                                component: Pronfile_info_address_addDetail,
+                            }]
                         }]
                     }]
                 }]

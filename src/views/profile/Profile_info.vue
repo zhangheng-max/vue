@@ -1,14 +1,21 @@
 <template>
+  <!-- 用户信息页面 -->
   <div class="Profile_info">
     <Header GoBack="true">
       <span slot="profile_info">用户信息</span>
     </Header>
     <section class="profile-info">
       <section class="headportrait">
-        <input type="file" class="profileinfopanel-upload" @input="File()" />
+        <input
+          type="file"
+          class="profileinfopanel-upload file"
+          name="file"
+          accept="image/png, image/gif, image/jpeg"
+          @change="update"
+        />
         <h2>头像</h2>
         <div class="headportrait-div">
-          <img :src="`https://elm.cangdu.org/img/${info.avatar}`" class="headportrait-div-top" />
+          <img :src="`https://elm.cangdu.org/img/${avatar}`" class="headportrait-div-top" />
           <span class="headportrait-div-bottom">
             <van-icon name="arrow" class="headportrait-div-bottom-inco" />
           </span>
@@ -17,7 +24,7 @@
       <router-link to="/profile/info/setusername" tag="section" class="headportrait headportraitwo">
         <h2>用户名</h2>
         <div class="headportrait-div">
-          <p>{{info.username}}</p>
+          <p>{{this.$store.state.user.user_name}}</p>
           <span class="headportrait-div-bottom">
             <van-icon name="arrow" class="headportrait-div-bottom-inco" />
           </span>
@@ -70,6 +77,7 @@
 
 <script>
 import { Dialog } from "vant";
+import axios from "axios";
 
 // Dialog({ message: "提示" });
 import Header from "../hfod/Header";
@@ -77,13 +85,17 @@ export default {
   data() {
     return {
       value: "",
-      info: [] //页面数据
+      info: [], //页面数据
+      datate: "",
+      headPhoto: "",
+      avatar: ""
     };
   },
   components: {
     Header
   },
   methods: {
+    //退出登录
     Danger() {
       Dialog.confirm({
         title: "退出登录",
@@ -97,23 +109,34 @@ export default {
         .catch(() => {
           // on cancel
         });
-      this.$router;
     },
-    File() {
-      console.log(this.value);
-    }
-  },
-  mounted() {
-    let user_id = this.$store.state.user.user_id;
-    if (user_id) {
-      this.$http
-        .get(`http://elm.cangdu.org/v1/user?user_id=${user_id}`)
-        .then(res => {
-          if (res.status == 200) {
-            this.info = res.data;
+    //上传头像
+    update(e) {
+      let id = this.$store.state.user.user_id; //个人id
+      let file = e.target.files[0]; //图片内容,事件,格式,名字
+
+      let param = new FormData(); //创建form对象
+      param.append("file", file, file.name); //通过append向form对象添加数据
+      // param.append("chunk", "0"); //添加form表单中其他数据
+      // console.log(param.get("file")); //FormData私有类对象，访问不到，可以通过get判断值是否传进去
+      let config = {
+        headers: { "Content-Type": "multipart/form-data" }
+      }; //添加请求头
+      axios
+        .post(`http://elm.cangdu.org/eus/v1/users/${id}/avatar`, param, config)
+        .then(response => {
+          // console.log(response);
+
+          if (response.data.status == 1) {
+            //   this.Username(); //上传图片成功重新请求个人数据
+            this.$store.commit("Avatar", response.data.image_path);
+            this.avatar = response.data.image_path;
           }
         });
     }
+  },
+  mounted() {
+    this.avatar = this.$store.state.user.avatar;
   }
 };
 </script>
@@ -131,6 +154,7 @@ export default {
   flex-direction: column;
 
   .profile-info {
+    flex-grow: 1;
     margin-top: 0.65rem;
 
     .headportrait {

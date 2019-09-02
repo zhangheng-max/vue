@@ -39,7 +39,8 @@ export default {
   data() {
     return {
       check: true, //编辑还是完成
-      info: "" //地址数据
+      info: "", //地址数据
+      number: 0
     };
   },
   components: {
@@ -49,6 +50,7 @@ export default {
     Backcheck() {
       this.check = !this.check;
     },
+    // 删除地数据
     del(id, i) {
       let info = [...this.info];
       this.$http
@@ -61,16 +63,30 @@ export default {
             this.info = info;
           }
         });
+    },
+    //取地址数据
+    Evalation() {
+      this.$http
+        .get(
+          `http://elm.cangdu.org/v1/users/${this.$store.state.user.user_id}/addresses`
+        )
+        .then(res => {
+          this.info = res.data;
+          this.number = res.data.length;
+        });
     }
   },
   mounted() {
-    this.$http
-      .get(
-        `http://elm.cangdu.org/v1/users/${this.$store.state.user.user_id}/addresses`
-      )
-      .then(res => {
-        this.info = res.data;
-      });
+    this.Evalation();
+  },
+  //监听路由，重新加载数据
+  watch: {
+    $route(to, from) {
+      if (to.path == "/profile/info/address") {
+        // this.$router.go(0);
+        this.Evalation();
+      }
+    }
   }
 };
 </script>
@@ -84,10 +100,7 @@ export default {
   bottom: 0;
   background: #f5f5f5;
   z-index: 99;
-  display: flex;
-  flex-direction: column;
   .main {
-    flex-grow: 1;
     margin-top: 0.66rem;
     border-top: 0.01rem solid #d9d9d9;
     border-bottom: 0.01rem solid #d9d9d9;
