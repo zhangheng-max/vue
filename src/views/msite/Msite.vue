@@ -260,7 +260,7 @@ export default {
               width: 0.9rem;
               height: 0.9rem;
               display: block;
-              border: 0.01rem #ccc solid;
+              // border: 0.01rem #ccc solid;
               margin-right: 0.1rem;
             }
             .item {

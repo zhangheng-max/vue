@@ -22,6 +22,7 @@
           <van-field
             class="input"
             v-model="address"
+            :class="{[addressCheck]:'setname'}"
             placeholder="请填写详细送餐地址"
             @input="InputChange(2)"
           />
@@ -31,13 +32,20 @@
           <van-field
             class="input"
             v-model="phone"
+            :class="{[phoneCheck]:'setname'}"
             placeholder="请填写能够联系到您的手机号"
             @input="InputChange(3)"
           />
           <p v-if="phoneCheck">请输入正确的手机号</p>
         </div>
         <div>
-          <van-field class="input" v-model="phone_bk" placeholder="备用联系电话（选填）" />
+          <van-field
+            class="input"
+            :class="{[phone_bkCheck]:'setname'}"
+            v-model="phone_bk"
+            placeholder="备用联系电话（选填）"
+            @input="InputChange(4)"
+          />
           <p v-if="phone_bkCheck">请输入正确的手机号</p>
         </div>
       </section>
@@ -62,7 +70,10 @@ export default {
       phoneCheck: false,
       phone_bk: "",
       phone_bkCheck: false,
-      button: false
+      button: true,
+      a: true,
+      b: true,
+      c: true
     };
   },
   methods: {
@@ -100,23 +111,44 @@ export default {
       if (val == 1) {
         if (this.name.length < 6 || this.name.length > 24) {
           this.nameCheck = "setname";
+          this.a = true;
         } else {
           this.nameCheck = false;
+          this.a = false;
         }
       }
       if (val == 2) {
         if (this.address.length < 6 || this.address.length > 24) {
           this.addressCheck = "setname";
+          this.b = true;
         } else {
           this.addressCheck = false;
+          this.b = false;
         }
       }
       if (val == 3) {
-        if (this.phone.length < 6 || this.phone.length > 24) {
-          this.phoneCheck = "setname";
-        } else {
+        let str = /^(185|175|173|152)\d{8}$/;
+        if (str.test(this.phone)) {
           this.phoneCheck = false;
+          this.c = false;
+        } else {
+          this.phoneCheck = "setname";
+          this.c = true;
         }
+      }
+      if (val == 4) {
+        let str = /^(185|175|173|152)\d{8}$/;
+        if (str.test(this.phone_bk)) {
+          this.phone_bkCheck = false;
+        } else {
+          this.phone_bkCheck = "setname";
+        }
+      }
+
+      if (this.a == false && this.b == false && this.c == false) {
+        this.button = false;
+      } else {
+        this.button = true;
       }
     },
     // 加载

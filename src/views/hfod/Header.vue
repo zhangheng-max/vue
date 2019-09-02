@@ -44,6 +44,8 @@
       <slot name="addressadd"></slot>
       <!-- 搜索地址 -->
       <slot name="addDetail"></slot>
+      <!-- 重置密码 -->
+      <slot name="forget"></slot>
     </div>
 
     <div class="header-icon-user">

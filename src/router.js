@@ -24,6 +24,7 @@ const Pronfile_info_address_addDetail = r => require.ensure([], () => r(require(
 const Download = r => require.ensure([], () => r(require('./views/profile/Download.vue')), 'Download')
 const Shop = r => require.ensure([], () => r(require('./views/shop/Shop.vue')), 'Shop')
 const Login = r => require.ensure([], () => r(require('./views/login/Login.vue')), 'Login')
+const Forget = r => require.ensure([], () => r(require('./views/forget/Forget.vue')), 'Forget')
 export default new Router({
     routes: [{
         path: '/',
@@ -121,6 +122,12 @@ export default new Router({
                 path: '/login',
                 name: 'Login',
                 component: Login
+            },
+            //修改密码页面
+            {
+                path: '/forget',
+                name: 'Forget',
+                component: Forget
             }
         ]
     }]

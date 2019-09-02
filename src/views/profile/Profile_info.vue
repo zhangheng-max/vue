@@ -58,7 +58,7 @@
         </div>
       </section>
       <section class="bind-phone">安全设置</section>
-      <section class="headportrait headportraitwo">
+      <router-link to="/forget" tag="section" class="headportrait headportraitwo">
         <h2>登录密码</h2>
         <div class="headportrait-div">
           <p>修改</p>
@@ -66,7 +66,7 @@
             <van-icon name="arrow" class="headportrait-div-bottom-inco" />
           </span>
         </div>
-      </section>
+      </router-link>
       <section class="danger">
         <van-button type="danger" class="button" @click="Danger()">退出登录</van-button>
       </section>
