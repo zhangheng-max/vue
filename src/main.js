@@ -25,6 +25,7 @@ if ('addEventListener' in document) {
         FastClick.attach(document.body);
     }, false);
 }
+
 new Vue({
     router,
     store,

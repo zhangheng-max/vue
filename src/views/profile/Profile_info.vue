@@ -71,7 +71,7 @@
         <van-button type="danger" class="button" @click="Danger()">退出登录</van-button>
       </section>
     </section>
-    <router-view></router-view>
+      <router-view></router-view>
   </div>
 </template>
 

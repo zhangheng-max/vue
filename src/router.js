@@ -14,6 +14,7 @@ const Msite = r => require.ensure([], () => r(require('./views/msite/Msite.vue')
 const Search = r => require.ensure([], () => r(require('./views/search/Search.vue')), 'Search')
 const Order = r => require.ensure([], () => r(require('./views/order/Order.vue')), 'Order')
 const Profile = r => require.ensure([], () => r(require('./views/profile/Profile.vue')), 'Profile')
+const cs = r => require.ensure([], () => r(require('./views/profile/cs.vue')), 'cs')
 
 const Profile_info = r => require.ensure([], () => r(require('./views/profile/Profile_info.vue')), 'Profile_info')
 const Pronfile_info_setusername = r => require.ensure([], () => r(require('./views/profile/Pronfile_info_setusername.vue')), 'Pronfile_info_setusername')
@@ -30,11 +31,18 @@ export default new Router({
         path: '/',
         component: App, //顶级路由
         children: [
+
             //地址为空跳转home页面
             {
 
                 path: '',
                 redirect: '/home',
+            },
+            {
+
+                path: '/cs',
+                name: 'cs',
+                component: cs
             },
             //首页城市页面
             {
