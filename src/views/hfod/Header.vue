@@ -46,6 +46,8 @@
       <slot name="addDetail"></slot>
       <!-- 重置密码 -->
       <slot name="forget"></slot>
+      <!-- 下单页面 -->
+      <slot name="confirm"></slot>
     </div>
 
     <div class="header-icon-user">

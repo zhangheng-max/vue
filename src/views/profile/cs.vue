@@ -1,50 +1,103 @@
 <template>
-  <div class="mode">
-    <button @click="add($event)" class="button">+</button>
+  <div class="vehicle">
+    <button @click="check=true">显示</button>
+    <div class="shadow" v-if="check">
+      <div class="Grade">
+        <section class="icon">
+          <van-icon name="cross" class="icon_in" @click="check=false" />
+          <p>车辆整体评分</p>
+        </section>
+        <section class="model">
+          <van-picker :columns="columns" @change="onChange" class="columns" />
+          <van-picker :columns="columns" @change="Version" class="columns" />
+        </section>
+        <section>
+          <div class="button">保存</div>
+        </section>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import jq from "jquery";
+import Vue from "vue";
+import Vant from "vant";
+import "vant/lib/index.css";
+
+Vue.use(Vant);
+
+import "./rem";
+
 export default {
   data() {
     return {
-      show: true
+      check: true,
+      columns: ["杭州", "宁波", "温州", "嘉兴", "湖州"]
     };
   },
-  mounted() {},
   methods: {
-    add(e) {
-      console.log(e);
-      let mode = document.getElementById("mode");
-
-      let div = document.createElement("div");
-      let div2 = document.createElement("div");
-      div.className = "ball";
-      div2.className = "ball2";
-      div.style.top = e.clientY + "px";
-      div.style.left = e.clientX + "px";
-      document.body.appendChild(div);
-      div.appendChild(div2);
-
-      let y = window.innerHeight - e.clientY;
-      console.log(y);
-      div.style.webkitTransform = `translateY(${y}px)`;
-      div.style.transform = `translateY(${y}px)`;
-      div2.style.webkitTransform = `translateX(-${e.clientX - 20}px)`;
-      div2.style.transform = `translateX(-${e.clientX - 20}px)`;
-      setTimeout(() => {
-        document.body.removeChild(div);
-      }, 1000);
+    onChange(picker, value, index) {
+      // `当前值：${value}, 当前索引：${index}`;
+      console.log(value);
+    },
+    Version(picker, value, index) {
+      // `当前值：${value}, 当前索引：${index}`;
+      console.log(value);
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "./cs.css";
-.button {
-  margin-top: 50px;
-  margin-left: 50%;
+.vehicle {
+  width: 100%;
+  height: 100%;
+  .shadow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 59;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgba($color: #000000, $alpha: 0.5);
+    .Grade {
+      width: 86%;
+      // width: 100%;
+      padding: 0.1rem 0.13rem;
+      margin: 0 auto;
+      background: #fff;
+      .icon {
+        text-align: right;
+        p {
+          text-align: left;
+          font-size: 0.18rem;
+          font-weight: 600;
+          margin-left: 0.1rem;
+          margin-bottom: 0.1rem;
+        }
+      }
+      .model {
+        display: flex;
+        justify-content: center;
+        .columns {
+          padding: 0 0.15rem;
+        }
+      }
+    }
+    .button {
+      margin-top: 0.1rem;
+      width: 100%;
+      padding: 0.15rem 0;
+      background: blue;
+      color: #fff;
+      font-size: 0.18rem;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 0.05rem;
+    }
+  }
 }
 </style>

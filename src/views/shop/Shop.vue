@@ -88,7 +88,7 @@
             <footer class="menu_detail_footer">
               <section class="food_price">
                 <span class="food_price_1">¥</span>
-                <span class="food_price_2">20</span>
+                <span class="food_price_2">{{v.specfoods[0].price}}</span>
                 <span class="food_price_3">起</span>
               </section>
               <section class="cart_module">
@@ -97,7 +97,7 @@
                     <van-icon name="clear" class="clear" @click="minusData(v.specfoods[0])" />
                   </span>
                   <span class="cart_num" v-if="show(v.item_id)">
-                    <span></span>
+                    <span>{{num(v.specfoods[0])}}</span>
                   </span>
                   <span>
                     <van-icon name="add" class="clear" @click="addData(v.specfoods[0],$event)" />
@@ -130,8 +130,8 @@
         </section>
       </section>
       <section class="gotopay">
-        <van-button type="primary" v-if="data.length>0" class="button">去结算</van-button>
-        <span v-else>还差¥20起送</span>
+        <van-button type="primary" v-if="price>=20" class="button" @click="GoOrder()">去结算</van-button>
+        <span v-else>还差¥{{20-price}}起送</span>
       </section>
     </footer>
 
@@ -286,6 +286,27 @@ export default {
       } else {
         this.check = false;
       }
+    },
+    num(obj) {
+      let arr = [...this.data];
+      let num = 0;
+      for (let i in arr) {
+        if (arr[i].item_id == obj.item_id) {
+          num = arr[i].num;
+        } else {
+          num = 0;
+        }
+      }
+      return num;
+    },
+    GoOrder() {
+      this.$router.push({
+        path: "/confirmOrder",
+        query: {
+          geohash: this.$route.query.geohash,
+          shopId: this.$route.query.id
+        }
+      });
     }
   },
   mounted() {

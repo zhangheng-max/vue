@@ -26,6 +26,7 @@ const Download = r => require.ensure([], () => r(require('./views/profile/Downlo
 const Shop = r => require.ensure([], () => r(require('./views/shop/Shop.vue')), 'Shop')
 const Login = r => require.ensure([], () => r(require('./views/login/Login.vue')), 'Login')
 const Forget = r => require.ensure([], () => r(require('./views/forget/Forget.vue')), 'Forget')
+const confirmOrder = r => require.ensure([], () => r(require('./views/confirmOrder/confirmOrder.vue')), 'confirmOrder')
 export default new Router({
     routes: [{
         path: '/',
@@ -136,6 +137,12 @@ export default new Router({
                 path: '/forget',
                 name: 'Forget',
                 component: Forget
+            },
+            // 下单页面
+            {
+                path: '/confirmOrder',
+                name: 'confirmOrder',
+                component: confirmOrder
             }
         ]
     }]

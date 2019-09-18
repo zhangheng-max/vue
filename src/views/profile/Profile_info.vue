@@ -71,7 +71,7 @@
         <van-button type="danger" class="button" @click="Danger()">退出登录</van-button>
       </section>
     </section>
-      <router-view></router-view>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -104,7 +104,7 @@ export default {
         .then(() => {
           // on confirm
           this.$store.commit("Danger");
-          this.$router.push({ path: "/profile" });
+          this.$router.go(-1);
         })
         .catch(() => {
           // on cancel

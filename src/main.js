@@ -8,7 +8,7 @@ import FastClick from 'fastclick'
 
 import './congig/rem'
 import 'vant/lib/index.css'
-import { Button, Field, Switch } from 'mint-ui';
+import { Button, Field, Switch, } from 'mint-ui';
 import 'mint-ui/lib/style.css'
 
 Vue.component(Field.name, Field);
